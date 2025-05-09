@@ -1,52 +1,187 @@
 ---
-title: "Proyecto I"
+title: "Sueño y calidad de vida"
 author: "Las Ali"
-date: "2025-05-02"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
 ```
+El sueño es uno de los pilares fundamentales de la salud y el bienestar. Dormir lo suficiente y con buena calidad no solo impacta en la salud física, sino también en el rendimiento cognitivo y emocional. Durante el descanso nocturno, el cuerpo realiza funciones esenciales: se recupera del desgaste diario, consolida la memoria y regula procesos hormonales que mantienen el equilibrio del organismo. Sin embargo, en la sociedad moderna, factores como el estrés, la falta de actividad física y el uso excesivo de cafeína han alterado los patrones de sueño de muchas personas.
 
-## R Markdown
+El ritmo de vida actual, marcado por jornadas extensas, preocupaciones constantes y un acceso ilimitado a dispositivos electrónicos, ha desplazado el descanso a un segundo plano. Las horas destinadas a dormir se ven interrumpidas o reducidas, afectando tanto la calidad como la cantidad de sueño. Como consecuencia, muchos enfrentan problemas de salud como fatiga crónica, baja concentración y alteraciones en el estado de ánimo.
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+A pesar de la creciente conciencia sobre la importancia del sueño, cada vez más personas reportan dificultades para descansar adecuadamente. El estrés laboral, la carga académica, los problemas personales y la falta de hábitos saludables crean un entorno que perjudica la calidad del sueño. Además, el estilo de vida moderno, caracterizado por la inactividad física y el consumo elevado de estimulantes como la cafeína, añade obstáculos adicionales. El sueño insuficiente y de baja calidad no solo reduce el bienestar diario, sino que también puede desencadenar problemas físicos y emocionales. En este contexto, surge la necesidad de analizar cómo interactúan estos factores y cuál es su impacto real en el descanso nocturno.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+Es indispensable identificar qué hábitos o factores personales contribuyen a un buen descanso y cuáles lo obstaculizan. Entender esta dinámica resulta esencial para promover prácticas saludables que ayuden a mantener el equilibrio físico y mental.
 
-```{r cars}
-summary(cars)
-```
+Para analizar la influencia de diversas variables en el sueño, se utilizó un conjunto de datos descargado desde Kaggle y contiene información relevante sobre diversos factores relacionados con el sueño, como la duración del sueño, el nivel de estrés, la actividad física, el índice de masa corporal (IMC) y la presencia de trastornos del sueño. 
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-## Definición de fuentes de datos
-
-El conjunto de datos utilizado se descargó desde Kaggle y contiene información sobre sueño, salud y estilo de vida de distintos individuos.
-
-```{r cargar-datos, message=FALSE, warning=FALSE}
+```{r cargar-datos, echo=FALSE, message=FALSE, warning=FALSE}
 # Cargar librería
 library(readr)
-
-# Leer el archivo CSV (ajusta el nombre si lo cambiaste)
 df <- read_csv("Sleep_health_and_lifestyle_dataset.csv")
 ```
 
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 library(ggplot2)
-ggplot(df, aes(x = `Sleep Duration`)) +
-  geom_histogram(binwidth = 0.5, fill = "steelblue", color = "white") +
-  labs(title = "Distribución de la duración del sueño",
-       x = "Horas de sueño",
-       y = "Frecuencia")
+library(plotly)
+
+p <- ggplot(df, aes(x = `Sleep Duration`)) +
+  geom_histogram(binwidth = 0.5, fill = "azure3", color = "white") +
+  labs(title = "Duración del sueño",
+       x = "Horas de sueño por noche",
+       y = "Cantidad de personas") +
+  theme_minimal()
+
+ggplotly(p)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+
+Esta gráfica muestra la distribución de la duración del sueño en horas. La mayoría de las personas duerme entre 6 y 8 horas por noche, lo que sugiere una concentración en un rango considerado saludable. Además, existe un pequeño grupo con más de 8 horas de sueño. Sin embargo, se puede determinar que en términos generales la duración del sueño se mantiene en rangos saludables.
+
+
+```{r echo=FALSE}
+
+p <- ggplot(df, aes(x = `Stress Level`)) +
+  geom_bar(fill = "coral3") +
+  labs(title = "Nivel de estrés",
+       x = "Nivel de estrés (1–10)",
+       y = "Cantidad de personas") +
+  theme_minimal()
+ggplotly(p)
+```
+
+
+Esta gráfica muestra la distribución del nivel de estrés reportado por los participantes en una escala de 1 a 10. Las barras representan la cantidad de personas que experimentan cada nivel de estrés, agrupadas en intervalos específicos. Se observa que los niveles de estrés más frecuentes se concentran en los valores de 3, 4, y 8. El hecho de que el nivel de estrés 8 tenga una representación notable sugiere que hay un grupo significativo que enfrenta niveles elevados de tensión, lo que podría impactar negativamente en su descanso y salud en general. Por otro lado, los niveles más bajos (3 y 4) también muestran una frecuencia alta, lo que indica que otro grupo considerable percibe su carga de estrés como moderada. Al tener datos que reflejan puntos tan diferentes con respecto a la percepción del estrés, se podría considerar la percepción subjetiva de las personas con respecto a la interpretación del estrés.
+```{r echo=FALSE}
+p <- ggplot(df, aes(x = `Physical Activity Level`)) +
+  geom_histogram(binwidth = 1, fill = "cadetblue4", color = "white") +
+  labs(title = "Nivel de actividad física",
+       x = "Nivel de actividad física",
+       y = "Cantidad de personas") +
+  theme_minimal()
+ggplotly(p)
+```
+
+
+Esta gráfica muestra la distribución del nivel de actividad física de los participantes. Las barras representan la cantidad de personas que realizan actividad física en distintos niveles, agrupados en intervalos específicos. Lo primero que destaca en esta visualización es que el nivel de actividad física no está distribuido de manera continua, sino que presenta picos en valores específicos: 30, 45, 60, 75 y 90. Estos picos en la gráfica puede reflejar que la mayoría de las personas se identifican como poco activas, moderadamente activas o muy activas.
+
+
+
+```{r echo=FALSE}
+p <- ggplot(df, aes(x = as.factor(`Stress Level`), y = `Sleep Duration`)) +
+  geom_boxplot(fill = "burlywood", color = "burlywood4") +
+  labs(title = "Duración del sueño según nivel de estrés",
+       x = "Nivel de estrés",
+       y = "Horas de sueño") +
+  theme_minimal()
+
+ggplotly(p)
+```
+Esta gráfica muestra la relación entre el nivel de estrés (en el eje x) y la duración del sueño en horas (en el eje y). Cada caja representa la distribución de las horas de sueño para un nivel de estrés específico. Se observa una tendencia clara y negativa: a medida que aumenta el nivel de estrés, la duración del sueño disminuye notablemente. Para el nivel de estrés más bajo, la duración del sueño se concentra alrededor de las 8 horas, lo que sugiere que estas personas logran dormir el tiempo recomendado. Sin embargo, en los niveles 7 y 8 que representan un estrés alto las horas de descanso se reducen a cerca de 6 horas o menos. Esta gráfica revela una relación inversa clara entre el estrés y el sueño, quienes experimentan niveles más altos de estrés tienden a dormir menos.
+
+```{r echo=FALSE}
+p <- ggplot(df, aes(x = `Physical Activity Level`, y = `Sleep Duration`)) +
+  geom_point(color = "darkgreen", alpha = 0.6) +
+  labs(title = "Duración del sueño vs Nivel de actividad física",
+       x = "Nivel de actividad física",
+       y = "Horas de sueño") +
+  theme_minimal()
+
+ggplotly(p)
+
+
+```
+Esta gráfica muestra la relación entre el nivel de actividad física (en el eje x) y la duración del sueño en horas (en el eje y). Cada punto representa a un individuo del estudio, y el color verde indica la distribución de los datos. Se puede observar un patrón positivo en la gráfica: a medida que el nivel de actividad física aumenta, la duración del sueño también tiende a incrementarse. Aunque se presentan casos que no siguen esta tendencia, se puede considerar una tendencia creciente. Lo que sugiere una relación positiva entre la actividad física y la duración del sueño, ya que las personas más acti}vas tienen a dormir más horas en promedio, lo que podría indicar que el ejercicio regular contribuye a mejorar la calidad del descanso.
+
+```{r echo=FALSE}
+df$Gender <- factor(df$Gender, levels = c("Female", "Male"), labels = c("Mujer", "Hombre"))
+p <- ggplot(df, aes(
+  x = `Stress Level`,
+  y = `Sleep Duration`,
+  color = `Quality of Sleep`,
+  size = `Daily Steps`)) +
+  geom_point(alpha = 0.6) +
+  facet_wrap(~ Gender) +
+  labs(title = "Estrés, sueño, calidad, pasos y género",
+       x = "Nivel de estrés",
+       y = "Horas de sueño",
+       color = "Calidad del sueño",
+       size = "Pasos diarios") +
+  theme_minimal()
+
+ggplotly(p)
+
+```
+
+Esta gráfica combina cinco variables: nivel de estrés (eje x), horas de sueño (eje y), tamaño del punto (número de pasos diarios), color del punto (calidad del sueño) y facetas (hombre o mujer). Cada burbuja representa a un individuo. Se observa claramente que, en ambos géneros, a medida que el nivel de estrés aumenta las horas y calidad del sueño disminuyen, especialmente en los niveles más alto de estrés. Con respecto a la cantidad de pasos diarios, se puede observar una tendencia ligeramente parecida. Ya que el tamaño de los puntos tienen a disminuir ligeramente conforme aumenta el nivel de estrés.
+
+
+```{r echo=FALSE}
+df$`Sleep Disorder` <- factor(df$`Sleep Disorder`, levels = c("None", "Insomnia", "Sleep Apnea"), labels = c("Ninguno", "Insomnio", "Apnea del sueño"))
+
+p <- ggplot(df, aes(x = `Sleep Duration`, fill = as.factor(`Quality of Sleep`))) +
+  geom_histogram(binwidth = 0.5, position = "identity", alpha = 0.6) +
+  facet_grid(Gender ~ `Sleep Disorder`) +
+  labs(title = "Duración del sueño según trastorno y género",
+       x = "Horas de sueño",
+       y = "Cantidad de personas",
+       fill = "Calidad del sueño") +
+  theme_minimal()
+
+ggplotly(p)
+```
+Esta gráfica muestra una distribución de la duración del sueño según el tipo de trastorno del sueño (ninguno, insomnio o apnea del sueño) y el género (mujer y hombre). Cada faceta representa un tipo de trastorno, y las barras están coloreadas según la calidad del sueño (de 4 a 9). La cantidad de personas se presenta en el eje Y, mientras que el eje X muestra las horas de sueño. En los participantes que no reportan ningún trastorno del sueño, se observa una distribución equilibrada entre los géneros. Tanto en hombres como en mujeres, la mayoría logra dormir entre 7 y 8 horas. Además, la calidad del sueño en estos casos tiende a ser elevada, destacando los colores claros que representan valores de 8 y 9. Esto sugiere que la ausencia de trastornos favorece tanto una mayor duración del sueño como una percepción subjetiva de buena calidad.
+El insomnio presenta un perfil claramente distinto. Las personas que lo padecen, independientemente del género, muestran una concentración marcada en torno a las 6 horas de sueño, lo que está por debajo de las recomendaciones mínimas. La calidad del sueño también disminuye notablemente, predominando valores intermedios como 6 y 7, pero con una notable ausencia de calidades altas (8 o 9).
+En el caso de la apnea del sueño, se muestra una mejora interesante en la calidad del sueño, con valor de 9. Es importante resaltar que en este caso se muestra una mayor presencia de mujeres de este trastorno.
+
+```{r echo=FALSE}
+library(ggplot2)
+library(plotly)
+
+# grafico 1
+g1 <- ggplot(df, aes(x = `Sleep Duration`)) +
+  geom_histogram(binwidth = 0.5, fill = "skyblue", color = "white") +
+  labs(x = "Horas de sueño", 
+       y = "Cantidad de personas") +
+  theme_minimal()
+
+# grafico 2
+g2 <- ggplot(df, aes(x = as.factor(`Stress Level`), y = `Sleep Duration`)) +
+  geom_boxplot(fill = "orange") +
+  labs(x = "Nivel de estrés", 
+       y = "Horas de sueño") +
+  theme_minimal()
+
+# grafico 3
+g3 <- ggplot(df, aes(x = `Physical Activity Level`, y = `Sleep Duration`)) +
+  geom_point(color = "darkgreen", alpha = 0.6) +
+  labs(x = "Nivel de actividad física", 
+       y = "Horas de sueño") +
+  theme_minimal()
+
+p1 <- ggplotly(g1)
+p2 <- ggplotly(g2)
+p3 <- ggplotly(g3)
+
+subplot(p1, p2, p3, nrows = 3, shareX = FALSE, titleX = TRUE, titleY = TRUE, margin = 0.08) %>%
+  layout(title = "Relación entre Actividad Física, Estrés y Sueño")
+
+```
+
+Este gráfico compuesto permite visualizar cómo la actividad física y el nivel de estrés afectan la duración del sueño en los participantes del estudio. Al combinar un histograma, un boxplot y un gráfico de dispersión, se logra una perspectiva clara sobre las interacciones entre estas variables clave.
+
+El histograma muestra que la mayoría de las personas duerme entre 7 y 8 horas por noche, lo que coincide con las recomendaciones generales de descanso. Sin embargo, al observar el boxplot central, se nota que el nivel de estrés tiene un impacto directo en la duración del sueño: a medida que el estrés aumenta, las horas de descanso disminuyen significativamente. Esto sugiere que el estrés elevado puede ser un factor limitante para alcanzar un descanso reparador.
+
+Por otro lado, el gráfico de dispersión revela que los niveles más altos de actividad física están relacionados con una mayor duración del sueño. Las personas que realizan más ejercicio tienden a dormir alrededor de 8 horas, mientras que quienes tienen bajos niveles de actividad física suelen dormir menos. Esto indica que el ejercicio podría actuar como un regulador positivo del descanso nocturno.
+
+## Conclusiones
+El análisis realizado revela que el sueño está fuertemente influenciado por múltiples factores, destacando especialmente el nivel de estrés y la actividad física como variables clave que determinan tanto la cantidad como la calidad del descanso nocturno. Los gráficos muestran que el estrés elevado tiene un impacto negativo directo en la duración del sueño. A medida que el estrés aumenta, la cantidad de horas de descanso disminuye significativamente, afectando especialmente a los hombres. Esto pone en evidencia la necesidad de gestionar adecuadamente el estrés para promover un sueño reparador, ya que el descanso insuficiente puede tener repercusiones tanto físicas como mentales, incluyendo fatiga crónica, problemas de concentración y mayor susceptibilidad a trastornos del estado de ánimo.
+
+Por otro lado, el análisis muestra que la actividad física regular favorece el descanso prolongado y de mejor calidad. Los individuos que realizan ejercicio de manera constante tienden a dormir más horas, en contraste con aquellos que tienen un estilo de vida sedentario. Esto sugiere que el ejercicio puede actuar como un factor protector contra los efectos negativos del estrés sobre el sueño, mejorando tanto la cantidad como la percepción de calidad del descanso.
+
+En conclusión, los resultados obtenidos subrayan la importancia de abordar el sueño de manera integral, considerando tanto factores emocionales como físicos. Fomentar la actividad física y reducir los niveles de estrés son estrategias fundamentales para promover un descanso adecuado. Además, la atención a los trastornos específicos del sueño y el enfoque diferenciado según género pueden contribuir al desarrollo de intervenciones más efectivas para mejorar la salud y el bienestar de la población.
